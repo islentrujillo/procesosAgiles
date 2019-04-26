@@ -22,7 +22,7 @@ $botman->hears('/ayuda', function ($bot) {
               'listar canciones|listar' => 'Listar las canciones disponibles',
               'crear playlist|playlist' => 'escoger canciones para la playlist',
               'mi lista' => 'Ver lista de canciones'];
-    
+    a
     $bot->reply("Los comandos disponibles son:");
 
     foreach($ayuda as $key => $value)
