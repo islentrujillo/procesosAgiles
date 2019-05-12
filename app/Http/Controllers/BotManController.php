@@ -46,7 +46,7 @@ class BotManController extends Controller
      */
     public function administrar(BotMan $bot)
     {
-        //$this->middleware('admin');
+        $this->middleware('admin');
         $bot->startConversation(new AdminConversacion());
     }
 
