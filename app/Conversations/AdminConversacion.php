@@ -319,12 +319,19 @@ public function playlist(){
         foreach ($lista->canciones as $key => $value) {
             $this->say($value->infoSong());
         }
-        $this->ask($this->yesno("Aprobar Esta playlist ?"),function(Answer $answer) use ($lista){
-                $lista->estado=$answer->getValue() ==  'si' ? 'Aprobada':'Rechazada' ;
+        if($lista->estado =='Aprobada'){
+            $this->ask($this->yesno("Reproducir Esta playlist ?"),function(Answer $answer) use ($lista){
+                $lista->estado=$answer->getValue() ==  'si' ? 'Reproducida':'Aprobada';
                 $lista->save();
-                $this->say('Hecho!! ✅');
-        });
-       
+                $this->say('Reproduciendo '.$lista->canciones->first()->infoSong().'!! ✅');
+            });
+        }else{
+            $this->ask($this->yesno("Aprobar Esta playlist ?"),function(Answer $answer) use ($lista){
+                    $lista->estado=$answer->getValue() ==  'si' ? 'Aprobada':'Rechazada' ;
+                    $lista->save();
+                    $this->say('Hecho!! ✅');
+            });
+        }
     });
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

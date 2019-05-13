@@ -1,24 +1,17 @@
 <?php
 use App\Http\Controllers\BotManController;
-// use BotMan\BotMan\Messages\Incoming\Answer;
-// use BotMan\BotMan\Messages\Outgoing\Question;
-// use BotMan\BotMan\Messages\Outgoing\Actions\Button;
-// use Illuminate\Foundation\Inspiring;
-
-// use BotMan\BotMan\Messages\Conversations\Conversation;
-
 
 use App\{Cancion,Genero};
 
 
 $botman = resolve('botman');
 
-//$usuario=auth::user->name;
-
-//$botman->hears('Hi|hello|hola|Hello|Hola', function ($bot) {
-    //$bot->reply("Hola Bienvenido a Nuestro BAR - MASTER! para conoser las opciones escribe ayuda");
-    $botman->hears("hola", function ($bot) { $bot->reply("hola ".auth::user()->name);
+$botman->hears('Hi|hello|hola|Hello|Hola', function ($bot) { 
+    $msg=Auth::user()->email=='barbot@gmail.com' ? 'ADMINISTRADOR ' : "CLIENTE ";
+    $saludo=" usuario ".$msg.Auth::user()->name." bienvenido a nuestro BAR MASTER!, para conocer sus opciones escribe la palabra ayuda";
+    $bot->reply("hola ".$saludo);
 }); 
+
 
 // $botman->hears('Start conversation', BotManController::class.'@startConversation');
 
@@ -29,21 +22,13 @@ $botman->fallback(function ($bot) {
 
 
 $botman->hears('/ayuda|ayuda', function ($bot) {
-  if(Auth::user()->email=='barbot@gmail.com'){ 
-    $saludo="Bienvedio usuario ADMINISTRADOR MENTIROSO a nuestro BAR MASTER! ara conocer sus opciones escribe la palabra ayuda";
     $ayuda = ['acerca de|acerca' => 'Ver la información de quien desarrollo este bot',
-              'administrar|admin'=> 'Administrar el sistema',
              'listar canciones|listar' => 'Listar las canciones disponibles',
+             'crear playlist|playlist' => 'Crear playlist',
              'genero {genero}' => 'buscar canciones de un genero'];
-    } 
-    else{
-        $saludo="Bienvedio usuario CLIENTE a nuestro BAR MASTER! para conocer sus opciones escribe la palabra ayuda";   
-        $ayuda = ['acerca de|acerca' => 'Ver la información de quien desarrollo este bot',
-              'listar canciones|listar' => 'Listar las canciones disponibles',
-              'crear playlist|playlist' => 'administrar playlist',
-              'genero {genero}' => 'buscar canciones de un genero'];
-        }      
-     $bot->reply($saludo);
+  if(Auth::user()->email=='barbot@gmail.com'){ 
+    $ayuda['administrar|admin'] = 'Administrar el sistema';
+    }       
     $bot->reply("Los comandos disponibles son:");
 
     foreach($ayuda as $key => $value)
@@ -55,6 +40,7 @@ $botman->hears('/ayuda|ayuda', function ($bot) {
 $botman->hears('administrar|admin', BotManController::class.'@administrar');
 
 $botman->hears('crear playlist|playlist', BotManController::class.'@cliente');
+                
 
 $botman->hears('listar canciones|listar', function($bot){
      $canciones=Cancion::all();

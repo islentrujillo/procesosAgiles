@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use BotMan\BotMan\BotMan;
 use Illuminate\Http\Request;
 use App\Conversations\{ExampleConversation,AdminConversacion,ClientConversation};
+use Auth;
 
 class BotManController extends Controller
 {
@@ -46,8 +47,12 @@ class BotManController extends Controller
      */
     public function administrar(BotMan $bot)
     {
-        $this->middleware('admin');
-        $bot->startConversation(new AdminConversacion());
+        // $this->middleware('admin');
+        if(Auth::user()->email=='barbot@gmail.com'){
+            $bot->startConversation(new AdminConversacion());
+        }else{
+            $bot->say('no entiendo lo que quiere decir');
+        }
     }
 
     /**

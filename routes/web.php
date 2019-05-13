@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('auth.login');
-});
+})->middleware('guest');
 
 Route::match(['get', 'post'], '/botman', 'BotManController@handle');
 Route::get('/botman/tinker', 'BotManController@tinker')->middleware('auth');
@@ -21,3 +21,6 @@ Route::get('/botman/tinker', 'BotManController@tinker')->middleware('auth');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/cerrar',function(){
+    return view('home');
+})->middleware('auth');

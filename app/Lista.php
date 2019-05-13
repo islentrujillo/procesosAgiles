@@ -16,4 +16,20 @@ class Lista extends Model
     public function canciones(){    //
    		 return $this->belongsToMany(Cancion::class,'pivots','lista_id','cancion_id');//->withPivot('id_symptom','peso');
   	}
+
+  	/**
+  	 * Lista belongs to User.
+  	 *
+  	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+  	 */
+  	public function user()
+  	{
+  		// belongsTo(RelatedModel, foreignKey = user_id, keyOnRelatedModel = id)
+  		return $this->belongsTo(User::class);
+  	}
+
+    public function cant(){
+      return count($this->canciones);
+    }
+
 }

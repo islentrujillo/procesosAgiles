@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cancion extends Model
 {
-     /**
+    /**
      * Fields that can be mass assigned.
      *
      * @var array
@@ -44,4 +44,5 @@ class Cancion extends Model
                 "Artista: ".$this->artista->nombre. "\n".
                 "Duración: ".$this->duracion." min";
     }
+
 }

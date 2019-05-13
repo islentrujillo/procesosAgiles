@@ -14,13 +14,13 @@ use Auth;
 class ClientConversation extends Conversation
 {
 
-    protected $canciones;
-    protected $mi_lista;
-    protected $key;
+	protected $canciones;
+	protected $mi_lista;
+	protected $key;
 
-    function __construct()
-    {
-        $this->canciones = Cancion::orderBy('nombre','ASC')->get();
+	function __construct()
+	{
+		$this->canciones = Cancion::orderBy('nombre','ASC')->get();
         $this->generos = Genero::orderBy('nombre','ASC')->get();
         if(\Cache::has(Auth::user()->clistas())){
             $this->mi_lista = \Cache::get(Auth::user()->clistas());
@@ -28,7 +28,7 @@ class ClientConversation extends Conversation
         }else{
             $this->key = 1;
         }
-    }
+	}
     /**
      * Start the conversation.
      *
@@ -42,7 +42,7 @@ class ClientConversation extends Conversation
 ###########################################################################################################
 
     private function opciones(){
-        $question = Question::create("Las opciones disponibles son: ")
+    	$question = Question::create("Las opciones disponibles son: ")
             ->fallback('Error, valor no encontrado')
             ->addButtons([
                 Button::create('Filtrar genero')->value('filter_genre'),
@@ -127,7 +127,7 @@ class ClientConversation extends Conversation
 
     private function playlists(){
         $lists = Auth::user()->listas;
-        if($lists->count()<0){
+        if($lists->count()<=0){
             $this->say('No hay playlist');
         }else{
             $question = Question::create('Selecciona una Lista')
@@ -140,6 +140,7 @@ class ClientConversation extends Conversation
             $this->ask($question,function (Answer $answer) use ($lists){
                 $lista = $lists->find($answer->getValue());
                 $this->listsongs($lista->canciones);
+                // if($lista->estado == 'Aprobada'){  $lista->estado == 'Reproducida'; $lista->save(); }
                 });
         }
     }
@@ -190,7 +191,7 @@ class ClientConversation extends Conversation
 
                 return $this->ask($this->songsbtn("Canciones en la actual playlist, selecciona cúal deseas quitar",$this->mi_lista),function(Answer $answer){
                     $pos = collect($this->mi_lista)->where('id',$answer->getValue())->keys()->first();
-                    $this->ask($this->yesno("quieres quitar ".$pos."de la playlist en construcciòn ?"), function (Answer $asw) use ($pos){
+                    $this->ask($this->yesno("quieres quitar la canción de la playlist en construcciòn ?"), function (Answer $asw) use ($pos){
                         if($asw->getValue()=='si'){                            
                             unset($this->mi_lista[$pos]);
                             \Cache::put(Auth::user()->clistas(),$this->mi_lista,12000);
