@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -12,7 +13,7 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('Email') }}</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
@@ -45,7 +46,7 @@
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                                     <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
+                                        {{ __('Recordad cuenta') }}
                                     </label>
                                 </div>
                             </div>
@@ -54,7 +55,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
+                                    {{ __('Iniciar') }}
                                 </button>
 
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
@@ -67,11 +68,8 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-8">
-            <img src="{{ asset('img/logo.png') }}" alt="Botman" title="Botman icon" class="image image-circle">
+<div class="col-md-12">
+<img src="{{ asset('img/logo.png') }}" alt="Botman" title="Botman icon" class="rounded mx-auto d-block">
         </div>
-        
-    </div>
 </div>
 @endsection

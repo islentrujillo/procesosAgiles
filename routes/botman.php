@@ -27,7 +27,7 @@ $botman->hears('/ayuda|ayuda', function ($bot) {
              'crear playlist|playlist' => 'Crear playlist',
              'genero {genero}' => 'buscar canciones de un genero'];
   if(Auth::user()->email=='barbot@gmail.com'){ 
-    $ayuda['administrar|admin'] = 'Administrar el sistema';
+        $ayuda['administrar|admin'] = 'Administrar el sistema';
     }       
     $bot->reply("Los comandos disponibles son:");
 

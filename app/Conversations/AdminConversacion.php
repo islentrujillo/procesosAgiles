@@ -269,6 +269,7 @@ public function op_del_song($data){
             if($answer->getValue()=='si'){
                 DB::table('cancions')->where('id',$data['id'])->delete();
                 $this->say('la Canción '.$data['nombre'].' fue eliminada ✅');
+                $this->admin();
             }else{
                 $this->say('has cancelado el proceso');
             }
@@ -298,6 +299,7 @@ public function op_del_gen(){
                     DB::table('cancions')->where('genero_id',$this->genero)->delete();
                     DB::table('generos')->where('id',$this->genero)->delete();
                     $this->say('el genero fue eliminado ✅');
+                    $this->admin();
                 }else{
                     $this->say('has cancelado el proceso');
                 }
